@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../environments/environment';
+// import { environment } from '../environments/environment';
 import { User } from './user'
 import { Repo } from './repo'
 
@@ -8,19 +8,21 @@ import { Repo } from './repo'
   providedIn: 'root'
 })
 export class UserService {
-  // my user profile
-  private username:string;
+
   user:User;
-  repo:Repo;
+  repos:Repo;
   reposArray:any;
 
-  BaseUrl = environment.BaseUrl;
-  FinalUrl = environment.FinalUrl;
-
+  // my user profile
+  private username:string;
+  private client_id = '04fd0bb96c393d7b7105';
+  private client_secret = 'B27f9a03fb39dc52557e8827d7b59c65c2a2c9bd';
+  
   constructor(private http:HttpClient) { 
-    this.username = "tc-mwangi";
+    console.log('Woohooo!')
+    this.username = 'tc-mwangi';
     this.user = new User ('', '', '', '', '', '', 0, 0, 0, '');
-    this.repo = new Repo('','','');
+    this.repos = new Repo('','','');
     this.reposArray = [];
   }
 
@@ -39,9 +41,11 @@ export class UserService {
       html_url: string;
 
     }
+
+
     
     let promise =new Promise((resolve,reject)=>{
-        this.http.get<ApiResponse>('https://api.github.com/users/' + this.username + this.FinalUrl).toPromise().then(response=>{
+        this.http.get<ApiResponse>("https://api.github.com/users/" + this.username + "?client_id=" + this.client_id + "&client_secret=" + this.client_secret).toPromise().then(response=>{
             
           this.user.name = response.name;
           this.user.login = response.login; 
@@ -53,15 +57,16 @@ export class UserService {
           this.user.following = response.following;
           this.user.public_repos = response.public_repos;
           this.user.html_url = response.html_url;
-          resolve()
-          console.log("Woooohooooo");
-          console.log(this.user);
 
-            resolve()
+          resolve()
+          
         },
         error=>{
-                this.user.login="tc-mwangi"
+                this.user.name="top_cat"
                 this.user.avatar_url="https://avatars3.githubusercontent.com/u/45211962?v=4"
+                this.user.location ="Nairobi, Kenya."
+                this.user.bio ="Taking the road less travelled."
+                
                 reject(error)
             }
         )
