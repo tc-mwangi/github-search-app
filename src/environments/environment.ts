@@ -4,8 +4,10 @@
 
 export const environment = {
   production: false,
-  BaseUrl: "https://api.github.com/users/",
-  FinalUrl:"?client_id=04fd0bb96c393d7b7105client_secret=B27f9a03fb39dc52557e8827d7b59c65c2a2c9bd"
+
+
+  // BaseUrl: "https://api.github.com/users/",
+  // FinalUrl:"?client_id=04fd0bb96c393d7b7105client_secret=B27f9a03fb39dc52557e8827d7b59c65c2a2c9bd"
 
   
 };
